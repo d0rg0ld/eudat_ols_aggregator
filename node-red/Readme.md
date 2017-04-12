@@ -6,4 +6,4 @@ Currently, one test workflow is provided for EBI-OLS (http://www.ebi.ac.uk/ols/i
 
 ![Image of EBI downloader workflow](https://raw.githubusercontent.com/d0rg0ld/eudat_ols_aggregator/master/node-red/EBI_Node-Red_workflow.png)
 
-The output of the test workflow is stored in file "ebi_harvest_test" located the server-side node-red working directory 
+The output of the test workflow is stored in file "ebi_harvest_test" located in the server-side node-red working directory 
