@@ -1,469 +1,378 @@
-[
-    {
-        "id": "cd7fbbd1.e91c48",
-        "type": "tab",
-        "label": "EBI Downloader Final"
-    },
-    {
-        "id": "69c3467d.1beaa8",
-        "type": "http request",
-        "z": "cd7fbbd1.e91c48",
-        "name": "ontos",
-        "method": "GET",
-        "ret": "obj",
-        "url": "",
-        "tls": "",
-        "x": 343.75000381469727,
-        "y": 139.25000953674316,
-        "wires": [
-            [
-                "af553f35.7c978",
-                "5d4c2336.0db79c"
-            ]
-        ]
-    },
-    {
-        "id": "8cc9c9e9.907e98",
-        "type": "inject",
-        "z": "cd7fbbd1.e91c48",
-        "name": "",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "x": 102.98051834106445,
-        "y": 52.33093452453613,
-        "wires": [
-            [
-                "853ee669.c720a8",
-                "58f21cf2.1854e4",
-                "6ae51eea.6b279"
-            ]
-        ]
-    },
-    {
-        "id": "af553f35.7c978",
-        "type": "switch",
-        "z": "cd7fbbd1.e91c48",
-        "name": "",
-        "property": "payload._links.next",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "nnull"
-            }
-        ],
-        "checkall": "true",
-        "outputs": 1,
-        "x": 431.63672256469727,
-        "y": 187.73779678344727,
-        "wires": [
-            [
-                "c062c5c2.ad39f8"
-            ]
-        ]
-    },
-    {
-        "id": "c062c5c2.ad39f8",
-        "type": "change",
-        "z": "cd7fbbd1.e91c48",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "url",
-                "pt": "msg",
-                "to": "payload._links.next.href",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 332.6200180053711,
-        "y": 250.15668106079102,
-        "wires": [
-            [
-                "69c3467d.1beaa8"
-            ]
-        ]
-    },
-    {
-        "id": "853ee669.c720a8",
-        "type": "template",
-        "z": "cd7fbbd1.e91c48",
-        "name": "get ontos url",
-        "field": "url",
-        "fieldType": "msg",
-        "format": "handlebars",
-        "syntax": "mustache",
-        "template": "http://www.ebi.ac.uk/ols/api/ontologies?size=100",
-        "x": 186.51004028320312,
-        "y": 138.16000747680664,
-        "wires": [
-            [
-                "69c3467d.1beaa8"
-            ]
-        ]
-    },
-    {
-        "id": "84c872f0.05e55",
-        "type": "split",
-        "z": "cd7fbbd1.e91c48",
-        "name": "",
-        "splt": "\\n",
-        "x": 656.1300735473633,
-        "y": 257.7399654388428,
-        "wires": [
-            [
-                "9d959bb1.9aad38"
-            ]
-        ]
-    },
-    {
-        "id": "5d4c2336.0db79c",
-        "type": "change",
-        "z": "cd7fbbd1.e91c48",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "payload._embedded.ontologies",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 534.9900283813477,
-        "y": 139.6298885345459,
-        "wires": [
-            [
-                "e88a05b5.7f6288"
-            ]
-        ]
-    },
-    {
-        "id": "c591c414.fd95c8",
-        "type": "template",
-        "z": "cd7fbbd1.e91c48",
-        "name": "get terms url",
-        "field": "url",
-        "fieldType": "msg",
-        "format": "handlebars",
-        "syntax": "mustache",
-        "template": "http://www.ebi.ac.uk/ols/api/ontologies/{{payload.ontologyId}}/terms?size=500",
-        "x": 674.8299674987793,
-        "y": 312.27994537353516,
-        "wires": [
-            [
-                "94158e62.eec9"
-            ]
-        ]
-    },
-    {
-        "id": "94158e62.eec9",
-        "type": "http request",
-        "z": "cd7fbbd1.e91c48",
-        "name": "terms",
-        "method": "GET",
-        "ret": "obj",
-        "url": "",
-        "tls": "",
-        "x": 818.2599563598633,
-        "y": 311.4467248916626,
-        "wires": [
-            [
-                "fa7179a6.46e938",
-                "29124372.5a3ffc"
-            ]
-        ]
-    },
-    {
-        "id": "fa7179a6.46e938",
-        "type": "switch",
-        "z": "cd7fbbd1.e91c48",
-        "name": "",
-        "property": "payload._links.next",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "nnull"
-            }
-        ],
-        "checkall": "true",
-        "outputs": 1,
-        "x": 912.5986404418945,
-        "y": 359.81287574768066,
-        "wires": [
-            [
-                "bc53a54d.41edb8"
-            ]
-        ]
-    },
-    {
-        "id": "bc53a54d.41edb8",
-        "type": "change",
-        "z": "cd7fbbd1.e91c48",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "url",
-                "pt": "msg",
-                "to": "payload._links.next.href",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 800.5322341918945,
-        "y": 407.80335521698,
-        "wires": [
-            [
-                "94158e62.eec9"
-            ]
-        ]
-    },
-    {
-        "id": "e88a05b5.7f6288",
-        "type": "function",
-        "z": "cd7fbbd1.e91c48",
-        "name": "Debug Reduce number of ontologies",
-        "func": "// First Line: All Ontologies\n// Second Line: First two Ontologies\n\n//var newMsg = { payload: msg.payload };\nvar newMsg = { payload: msg.payload.slice(0,2) };\nreturn newMsg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 736.2400665283203,
-        "y": 200.48004722595215,
-        "wires": [
-            [
-                "84c872f0.05e55"
-            ]
-        ]
-    },
-    {
-        "id": "7e755026.e4079",
-        "type": "join",
-        "z": "cd7fbbd1.e91c48",
-        "name": "",
-        "mode": "custom",
-        "build": "string",
-        "property": "payload",
-        "propertyType": "msg",
-        "key": "topic",
-        "joiner": "",
-        "timeout": "",
-        "count": "",
-        "x": 1223.6203842163086,
-        "y": 600.370002746582,
-        "wires": [
-            [
-                "6b793191.9d442",
-                "732261ee.92411"
-            ]
-        ]
-    },
-    {
-        "id": "f2156c25.8ab98",
-        "type": "split",
-        "z": "cd7fbbd1.e91c48",
-        "name": "",
-        "splt": "\\n",
-        "x": 1104.209976196289,
-        "y": 468.01001739501953,
-        "wires": [
-            [
-                "a527f211.bc75b"
-            ]
-        ]
-    },
-    {
-        "id": "29124372.5a3ffc",
-        "type": "change",
-        "z": "cd7fbbd1.e91c48",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "payload._embedded.terms",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 985.6502838134766,
-        "y": 312.0499954223633,
-        "wires": [
-            [
-                "2d5ce1ac.707bce"
-            ]
-        ]
-    },
-    {
-        "id": "9d959bb1.9aad38",
-        "type": "function",
-        "z": "cd7fbbd1.e91c48",
-        "name": "ontocounter",
-        "func": "global.set(\"ontocounter\",global.get(\"ontocounter\")+1);\nonto_arr=global.get(\"termcounter_all\");\nonto_arr[msg.payload.ontologyId]=msg.payload.numberOfTerms;\nglobal.set(\"termcounter_all\",onto_arr);\nmsg.ontostats= {   count : global.get(\"ontocounter\"), \n                   onto : msg.payload.ontologyId,\n                   numTerms : msg.payload.numberOfTerms\n            };\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 799.7368927001953,
-        "y": 257.689977645874,
-        "wires": [
-            [
-                "c591c414.fd95c8"
-            ]
-        ]
-    },
-    {
-        "id": "6b793191.9d442",
-        "type": "file",
-        "z": "cd7fbbd1.e91c48",
-        "name": "ebi_harvest_test",
-        "filename": "ebi_harvest_test",
-        "appendNewline": true,
-        "createDir": false,
-        "overwriteFile": "false",
-        "x": 1394.7229232788086,
-        "y": 600.802864074707,
-        "wires": []
-    },
-    {
-        "id": "ffe5f646.20b048",
-        "type": "csv",
-        "z": "cd7fbbd1.e91c48",
-        "name": "",
-        "sep": "\\t",
-        "hdrin": "",
-        "hdrout": "",
-        "multi": "one",
-        "ret": "\\n",
-        "temp": "",
-        "x": 1102.740135192871,
-        "y": 599.2599544525146,
-        "wires": [
-            [
-                "7e755026.e4079"
-            ]
-        ]
-    },
-    {
-        "id": "55d4ba6d.cf9704",
-        "type": "function",
-        "z": "cd7fbbd1.e91c48",
-        "name": "Debug Reduce number of terms",
-        "func": "// First Line: All terms\n// Second Line: First two terms per page\n\nvar newMsg = { payload: msg.payload };\n//var newMsg = { payload: msg.payload.slice(0,2) };\nreturn newMsg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 1186.250015258789,
-        "y": 415.2500066757202,
-        "wires": [
-            [
-                "f2156c25.8ab98"
-            ]
-        ]
-    },
-    {
-        "id": "58f21cf2.1854e4",
-        "type": "function",
-        "z": "cd7fbbd1.e91c48",
-        "name": "init global vars",
-        "func": "global.set(\"termcounter_all\",{});\nglobal.set(\"termcounter\",{});\nglobal.set(\"ontocounter\",0);\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 332.82150650024414,
-        "y": 52.38096809387207,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "2d5ce1ac.707bce",
-        "type": "function",
-        "z": "cd7fbbd1.e91c48",
-        "name": "termcounter",
-        "func": "termcounter_dict=global.get(\"termcounter\");\nontoname=msg.payload[0].ontology_name;\n//for (i=0; i<msg.payload.length, i++)\n//   if (msg.payload[i].is_defining_ontology)\n//        ontoname=msg.payload[i].ontology_name;\nif(!(ontoname in termcounter_dict))\n    termcounter_dict[ontoname]=0;\n    \ntermcounter_dict[ontoname]=termcounter_dict[ontoname]+msg.payload.length;\n    \nglobal.set(\"termcounter\", termcounter_dict);\n//var newMsg = { payload: [global.get(\"termcounter\"),global.get(\"termcounter_all\")] };\n//return newMsg;\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 1162.603286743164,
-        "y": 312.03351402282715,
-        "wires": [
-            [
-                "55d4ba6d.cf9704"
-            ]
-        ]
-    },
-    {
-        "id": "a5e59c97.fb52d",
-        "type": "debug",
-        "z": "cd7fbbd1.e91c48",
-        "name": "ontodebugger TC all",
-        "active": true,
-        "console": "true",
-        "complete": "true",
-        "x": 1413.4167785644531,
-        "y": 678.7499485015869,
-        "wires": []
-    },
-    {
-        "id": "732261ee.92411",
-        "type": "function",
-        "z": "cd7fbbd1.e91c48",
-        "name": "termcounter_all",
-        "func": "var newMsg ={ payload: [   global.get(\"termcounter_all\"),\n                            global.get(\"termcounter\")\n                        ]\n            };\nreturn newMsg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 1380.103416442871,
-        "y": 638.700080871582,
-        "wires": [
-            [
-                "a5e59c97.fb52d"
-            ]
-        ]
-    },
-    {
-        "id": "6ae51eea.6b279",
-        "type": "file",
-        "z": "cd7fbbd1.e91c48",
-        "name": "ebi_harvest_test",
-        "filename": "ebi_harvest_test",
-        "appendNewline": true,
-        "createDir": false,
-        "overwriteFile": "delete",
-        "x": 337.50000381469727,
-        "y": 89.50000381469727,
-        "wires": []
-    },
-    {
-        "id": "a527f211.bc75b",
-        "type": "function",
-        "z": "cd7fbbd1.e91c48",
-        "name": "csv formatter",
-        "func": "function joinArray(arr) {\n    out=null;\n    //console.log(\"DEBUG: \" + typeof arr);\n    try {\n        if (arr) {\n            out=arr.join(\"\\t\");\n            // To be on the safe side, we convert all \";\" to \".\" in order to \n            // use \";\" as sub-separator for joined arrays\n            out=out.replace(/;/g, '.');\n            out=out.replace(/\\t/g, ';'); \n            out=out.replace(/\\n/g, '');\n        }\n    }\n    catch(err) {\n        console.log(\"DEBUG: \" + arr + \" \" + err.message);\n    } \n        \n    return out;\n}\n\n//Convert description array\nvar datadesc=joinArray(msg.payload.description);\n//Convert synonyms\nvar synonyms=joinArray(msg.payload.synonyms);\n//Convert annotation array\nvar altTerms=joinArray(msg.payload.annotation[\"alternative term\"]);\n\nalternatives=null;\nif(synonyms!==null && altTerms===null)\n    alternatives=synonyms;\nif(synonyms===null && altTerms!==null)\n    alternatives=altTerms;\nif(synonyms!==null && altTerms!==null)\n    alternatives=synonyms+\";\"+altTerms;    \n\nmsg.payload = [ msg.payload.iri,\n                msg.payload.label,\n                datadesc,\n                alternatives,\n                msg.payload.ontology_prefix,\n                msg.payload.ontology_iri,\n                msg.payload.ontology_name\n];\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 1118.1500396728516,
-        "y": 529.279974937439,
-        "wires": [
-            [
-                "ffe5f646.20b048"
-            ]
-        ]
-    }
+[{
+		"id": "cd7fbbd1.e91c48",
+		"type": "tab",
+		"label": "EBI Downloader Final"
+	}, {
+		"id": "69c3467d.1beaa8",
+		"type": "http request",
+		"z": "cd7fbbd1.e91c48",
+		"name": "ontos",
+		"method": "GET",
+		"ret": "obj",
+		"url": "",
+		"tls": "",
+		"x": 279.4642753601074,
+		"y": 114.96428775787353,
+		"wires": [["af553f35.7c978", "5d4c2336.0db79c"]]
+	}, {
+		"id": "8cc9c9e9.907e98",
+		"type": "inject",
+		"z": "cd7fbbd1.e91c48",
+		"name": "",
+		"topic": "",
+		"payload": "",
+		"payloadType": "date",
+		"repeat": "",
+		"crontab": "",
+		"once": false,
+		"x": 94.2503547668457,
+		"y": 28.045209884643554,
+		"wires": [["853ee669.c720a8", "58f21cf2.1854e4", "6ae51eea.6b279"]]
+	}, {
+		"id": "af553f35.7c978",
+		"type": "switch",
+		"z": "cd7fbbd1.e91c48",
+		"name": "",
+		"property": "payload._links.next",
+		"propertyType": "msg",
+		"rules": [{
+				"t": "nnull"
+			}
+		],
+		"checkall": "true",
+		"outputs": 1,
+		"x": 367.3509941101074,
+		"y": 163.45207500457764,
+		"wires": [["c062c5c2.ad39f8"]]
+	}, {
+		"id": "c062c5c2.ad39f8",
+		"type": "change",
+		"z": "cd7fbbd1.e91c48",
+		"name": "",
+		"rules": [{
+				"t": "set",
+				"p": "url",
+				"pt": "msg",
+				"to": "payload._links.next.href",
+				"tot": "msg"
+			}
+		],
+		"action": "",
+		"property": "",
+		"from": "",
+		"to": "",
+		"reg": false,
+		"x": 268.33428955078125,
+		"y": 225.8709592819214,
+		"wires": [["69c3467d.1beaa8"]]
+	}, {
+		"id": "853ee669.c720a8",
+		"type": "template",
+		"z": "cd7fbbd1.e91c48",
+		"name": "get ontos url",
+		"field": "url",
+		"fieldType": "msg",
+		"format": "handlebars",
+		"syntax": "mustache",
+		"template": "http://www.ebi.ac.uk/ols/api/ontologies?size=100",
+		"x": 122.22431182861328,
+		"y": 113.87428569793701,
+		"wires": [["69c3467d.1beaa8"]]
+	}, {
+		"id": "84c872f0.05e55",
+		"type": "split",
+		"z": "cd7fbbd1.e91c48",
+		"name": "",
+		"splt": "\\n",
+		"x": 591.8443450927734,
+		"y": 233.45424365997314,
+		"wires": [["9d959bb1.9aad38"]]
+	}, {
+		"id": "5d4c2336.0db79c",
+		"type": "change",
+		"z": "cd7fbbd1.e91c48",
+		"name": "",
+		"rules": [{
+				"t": "set",
+				"p": "payload",
+				"pt": "msg",
+				"to": "payload._embedded.ontologies",
+				"tot": "msg"
+			}
+		],
+		"action": "",
+		"property": "",
+		"from": "",
+		"to": "",
+		"reg": false,
+		"x": 470.7042999267578,
+		"y": 115.34416675567627,
+		"wires": [["e88a05b5.7f6288", "c1e2634a.0a7be"]]
+	}, {
+		"id": "c591c414.fd95c8",
+		"type": "template",
+		"z": "cd7fbbd1.e91c48",
+		"name": "get terms url",
+		"field": "url",
+		"fieldType": "msg",
+		"format": "handlebars",
+		"syntax": "mustache",
+		"template": "http://www.ebi.ac.uk/ols/api/ontologies/{{payload.ontologyId}}/terms?size=500",
+		"x": 610.5442390441894,
+		"y": 287.9942235946655,
+		"wires": [["94158e62.eec9"]]
+	}, {
+		"id": "94158e62.eec9",
+		"type": "http request",
+		"z": "cd7fbbd1.e91c48",
+		"name": "terms",
+		"method": "GET",
+		"ret": "obj",
+		"url": "",
+		"tls": "",
+		"x": 753.9742279052734,
+		"y": 287.16100311279297,
+		"wires": [["fa7179a6.46e938", "29124372.5a3ffc"]]
+	}, {
+		"id": "fa7179a6.46e938",
+		"type": "switch",
+		"z": "cd7fbbd1.e91c48",
+		"name": "",
+		"property": "payload._links.next",
+		"propertyType": "msg",
+		"rules": [{
+				"t": "nnull"
+			}
+		],
+		"checkall": "true",
+		"outputs": 1,
+		"x": 848.3129119873047,
+		"y": 335.52715396881103,
+		"wires": [["bc53a54d.41edb8"]]
+	}, {
+		"id": "bc53a54d.41edb8",
+		"type": "change",
+		"z": "cd7fbbd1.e91c48",
+		"name": "",
+		"rules": [{
+				"t": "set",
+				"p": "url",
+				"pt": "msg",
+				"to": "payload._links.next.href",
+				"tot": "msg"
+			}
+		],
+		"action": "",
+		"property": "",
+		"from": "",
+		"to": "",
+		"reg": false,
+		"x": 736.2465057373047,
+		"y": 383.51763343811035,
+		"wires": [["94158e62.eec9"]]
+	}, {
+		"id": "e88a05b5.7f6288",
+		"type": "function",
+		"z": "cd7fbbd1.e91c48",
+		"name": "Debug Reduce number of ontologies",
+		"func": "// First Line: All Ontologies\n// Second Line: First two Ontologies\n\n//var newMsg = { payload: msg.payload };\nvar newMsg = { payload: msg.payload.slice(0,2) };\nreturn newMsg;",
+		"outputs": 1,
+		"noerr": 0,
+		"x": 671.9543380737305,
+		"y": 176.19432544708252,
+		"wires": [["84c872f0.05e55"]]
+	}, {
+		"id": "7e755026.e4079",
+		"type": "join",
+		"z": "cd7fbbd1.e91c48",
+		"name": "",
+		"mode": "custom",
+		"build": "string",
+		"property": "payload",
+		"propertyType": "msg",
+		"key": "topic",
+		"joiner": "",
+		"timeout": "",
+		"count": "",
+		"x": 1129.3346557617187,
+		"y": 566.0842809677124,
+		"wires": [["6b793191.9d442", "732261ee.92411"]]
+	}, {
+		"id": "f2156c25.8ab98",
+		"type": "split",
+		"z": "cd7fbbd1.e91c48",
+		"name": "",
+		"splt": "\\n",
+		"x": 1009.9242477416992,
+		"y": 433.7242956161499,
+		"wires": [["a527f211.bc75b"]]
+	}, {
+		"id": "29124372.5a3ffc",
+		"type": "change",
+		"z": "cd7fbbd1.e91c48",
+		"name": "",
+		"rules": [{
+				"t": "set",
+				"p": "payload",
+				"pt": "msg",
+				"to": "payload._embedded.terms",
+				"tot": "msg"
+			}
+		],
+		"action": "",
+		"property": "",
+		"from": "",
+		"to": "",
+		"reg": false,
+		"x": 921.3645553588867,
+		"y": 287.76427364349365,
+		"wires": [["2d5ce1ac.707bce", "d068e062.a2701"]]
+	}, {
+		"id": "9d959bb1.9aad38",
+		"type": "function",
+		"z": "cd7fbbd1.e91c48",
+		"name": "ontocounter",
+		"func": "global.set(\"ontocounter\",global.get(\"ontocounter\")+1);\nonto_arr=global.get(\"termcounter_all\");\nonto_arr[msg.payload.ontologyId]=msg.payload.numberOfTerms;\nglobal.set(\"termcounter_all\",onto_arr);\nmsg.ontostats= {   count : global.get(\"ontocounter\"), \n                   onto : msg.payload.ontologyId,\n                   numTerms : msg.payload.numberOfTerms\n            };\nreturn msg;",
+		"outputs": 1,
+		"noerr": 0,
+		"x": 735.4511642456055,
+		"y": 233.4042558670044,
+		"wires": [["c591c414.fd95c8"]]
+	}, {
+		"id": "6b793191.9d442",
+		"type": "file",
+		"z": "cd7fbbd1.e91c48",
+		"name": "ebi_harvest_test",
+		"filename": "ebi_harvest_test",
+		"appendNewline": true,
+		"createDir": false,
+		"overwriteFile": "false",
+		"x": 1300.4371948242187,
+		"y": 566.5171422958374,
+		"wires": []
+	}, {
+		"id": "ffe5f646.20b048",
+		"type": "csv",
+		"z": "cd7fbbd1.e91c48",
+		"name": "",
+		"sep": "\\t",
+		"hdrin": "",
+		"hdrout": "",
+		"multi": "one",
+		"ret": "\\n",
+		"temp": "",
+		"x": 1009.7044677734375,
+		"y": 566.2241821289062,
+		"wires": [["7e755026.e4079"]]
+	}, {
+		"id": "55d4ba6d.cf9704",
+		"type": "function",
+		"z": "cd7fbbd1.e91c48",
+		"name": "Debug Reduce number of terms",
+		"func": "// First Line: All terms\n// Second Line: First two terms per page\n\nvar newMsg = { payload: msg.payload };\n//var newMsg = { payload: msg.payload.slice(0,2) };\nreturn newMsg;",
+		"outputs": 1,
+		"noerr": 0,
+		"x": 1091.9642868041992,
+		"y": 380.9642848968506,
+		"wires": [["f2156c25.8ab98"]]
+	}, {
+		"id": "58f21cf2.1854e4",
+		"type": "function",
+		"z": "cd7fbbd1.e91c48",
+		"name": "init global vars",
+		"func": "global.set(\"termcounter_all\",{});\nglobal.set(\"termcounter\",{});\nglobal.set(\"ontocounter\",0);\nreturn msg;",
+		"outputs": 1,
+		"noerr": 0,
+		"x": 268.5357780456543,
+		"y": 28.09524631500244,
+		"wires": [[]]
+	}, {
+		"id": "2d5ce1ac.707bce",
+		"type": "function",
+		"z": "cd7fbbd1.e91c48",
+		"name": "termcounter",
+		"func": "termcounter_dict=global.get(\"termcounter\");\nontoname=msg.payload[0].ontology_name;\n//for (i=0; i<msg.payload.length, i++)\n//   if (msg.payload[i].is_defining_ontology)\n//        ontoname=msg.payload[i].ontology_name;\nif(!(ontoname in termcounter_dict))\n    termcounter_dict[ontoname]=0;\n    \ntermcounter_dict[ontoname]=termcounter_dict[ontoname]+msg.payload.length;\n    \nglobal.set(\"termcounter\", termcounter_dict);\n//var newMsg = { payload: [global.get(\"termcounter\"),global.get(\"termcounter_all\")] };\n//return newMsg;\nreturn msg;",
+		"outputs": 1,
+		"noerr": 0,
+		"x": 1098.3175582885742,
+		"y": 287.7477922439575,
+		"wires": [["55d4ba6d.cf9704"]]
+	}, {
+		"id": "a5e59c97.fb52d",
+		"type": "debug",
+		"z": "cd7fbbd1.e91c48",
+		"name": "ontodebugger TC all",
+		"active": true,
+		"console": "true",
+		"complete": "true",
+		"x": 1319.1310501098632,
+		"y": 644.4642267227173,
+		"wires": []
+	}, {
+		"id": "732261ee.92411",
+		"type": "function",
+		"z": "cd7fbbd1.e91c48",
+		"name": "termcounter_all",
+		"func": "var newMsg ={ payload: [   global.get(\"termcounter_all\"),\n                            global.get(\"termcounter\")\n                        ]\n            };\nreturn newMsg;",
+		"outputs": 1,
+		"noerr": 0,
+		"x": 1285.8176879882812,
+		"y": 604.4143590927124,
+		"wires": [["a5e59c97.fb52d"]]
+	}, {
+		"id": "6ae51eea.6b279",
+		"type": "file",
+		"z": "cd7fbbd1.e91c48",
+		"name": "ebi_harvest_test",
+		"filename": "ebi_harvest_test",
+		"appendNewline": true,
+		"createDir": false,
+		"overwriteFile": "delete",
+		"x": 273.2142753601074,
+		"y": 65.21428203582763,
+		"wires": []
+	}, {
+		"id": "a527f211.bc75b",
+		"type": "function",
+		"z": "cd7fbbd1.e91c48",
+		"name": "csv formatter",
+		"func": "function joinArray(arr) {\n    out=null;\n    //console.log(\"DEBUG: \" + typeof arr);\n    try {\n        if (arr) {\n            out=arr.join(\"\\t\");\n            // To be on the safe side, we convert all \";\" to \".\" in order to \n            // use \";\" as sub-separator for joined arrays\n            out=out.replace(/;/g, '.');\n            out=out.replace(/\\t/g, ';'); \n            out=out.replace(/\\n/g, '');\n        }\n    }\n    catch(err) {\n        console.log(\"DEBUG: \" + arr + \" \" + err.message);\n    } \n        \n    return out;\n}\n\n//Convert description array\nvar datadesc=joinArray(msg.payload.description);\n//Convert synonyms\nvar synonyms=joinArray(msg.payload.synonyms);\n//Convert annotation array\nvar altTerms=joinArray(msg.payload.annotation[\"alternative term\"]);\n\nalternatives=null;\nif(synonyms!==null && altTerms===null)\n    alternatives=synonyms;\nif(synonyms===null && altTerms!==null)\n    alternatives=altTerms;\nif(synonyms!==null && altTerms!==null)\n    alternatives=synonyms+\";\"+altTerms;    \n\nmsg.payload = [ msg.payload.iri,\n                msg.payload.label,\n                datadesc,\n                alternatives,\n                msg.payload.ontology_prefix,\n                msg.payload.ontology_iri,\n                msg.payload.ontology_name\n];\nreturn msg;",
+		"outputs": 1,
+		"noerr": 0,
+		"x": 1023.8643112182617,
+		"y": 494.99425315856933,
+		"wires": [["ffe5f646.20b048"]]
+	}, {
+		"id": "c1e2634a.0a7be",
+		"type": "debug",
+		"z": "cd7fbbd1.e91c48",
+		"name": "ontodebugger ontoinfo",
+		"active": true,
+		"console": "true",
+		"complete": "true",
+		"x": 784.6031875610351,
+		"y": 55.71427822113037,
+		"wires": []
+	}, {
+		"id": "d068e062.a2701",
+		"type": "debug",
+		"z": "cd7fbbd1.e91c48",
+		"name": "termdebugger terminfo",
+		"active": true,
+		"console": "true",
+		"complete": "true",
+		"x": 1180.019775390625,
+		"y": 166.547607421875,
+		"wires": []
+	}, {
+		"id": "2fe50e95.04d2e2",
+		"type": "comment",
+		"z": "cd7fbbd1.e91c48",
+		"name": "License",
+		"info": "MIT License \n\n \nCopyright (c) 2017  \n\n \nDoron Goldfarb \ndoron[dot]goldfarb[at]umweltbundesamt[dot]at \nUmweltbundesamt GmbH \nSpittelauer Laende 5 \n1090 Vienna \nAustria \n\n\nPermission is hereby granted, free of charge, to any person obtaining a copy \nof this software and associated documentation files (the \"Software\"), to deal \nin the Software without restriction, including without limitation the rights \nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell \ncopies of the Software, and to permit persons to whom the Software is \nfurnished to do so, subject to the following conditions: \n\n \nThe above copyright notice and this permission notice shall be included in all \ncopies or substantial portions of the Software. \n\n \nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR \nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, \nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE \nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER \nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, \nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE \nSOFTWARE. ",
+		"x": 93,
+		"y": 462.04998779296875,
+		"wires": []
+	}
 ]
+
